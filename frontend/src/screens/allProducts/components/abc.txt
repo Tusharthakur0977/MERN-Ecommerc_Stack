@@ -1,0 +1,109 @@
+import React, { useState } from "react";
+import {
+  Button,
+  Container,
+  List,
+  ListItem,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { Box } from "@mui/system";
+
+const DropdownList = () => {
+  const menuItems = [
+    {
+      title: "Fashion",
+      submenu: ["Men", "Women", "Kids", "Shoes", "Accessories"],
+    },
+    {
+      title: "Mobiles",
+      submenu: ["Apple", "Redmi", "Realme", "OnePlus", "Asus"],
+    },
+    {
+      title: "Laptops",
+      submenu: ["Dell", "Asus", "HP", "Lenovo", "Acer"],
+    },
+    {
+      title: "Electronics",
+      submenu: ["Cameras", "Computer", "Sound System", "LED's"],
+    },
+    {
+      title: "Furniture",
+      submenu: ["Beds", "Sofas/Chairs", "Matress", "Almirahs"],
+    },
+  ];
+
+  function Menuitem(items) {
+    const [dropdown, setDropdown] = useState(false);
+    return (
+      <>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            border:"1px solid green"
+          }}
+        >
+          <Box>
+            {items.submenu ? (
+              <>
+                <Typography
+                  type="button"
+                  variant="button"
+                  sx={{ borderBottom: "crimson" }}
+                  aria-expanded={dropdown ? "true" : "false"}
+                  onMouseEnter={() => setDropdown((prev) => !prev)}
+                  onMouseLeave={() => setDropdown((prev) => !prev)}
+                >
+                  {items.title}
+                </Typography>
+              </>
+            ) : (
+              <Button>{items.title}</Button>
+            )}
+          </Box>
+          <Box sx={{ margin: "10px 0", height: "200px" }}>
+            {Dropdown(items.submenu, dropdown)}
+          </Box>
+        </Box>
+      </>
+    );
+  }
+
+  function Dropdown(submenus, dropdown) {
+    return (
+      <ul style={{ display: dropdown ? "block" : "none" }}>
+        {submenus.map((submenu, index) => (
+          <li key={index} className="menu-items">
+            <Button variant="contained" sx={{ background: "black" }}>
+              {submenu.title}
+            </Button>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+  return (
+    <>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          background: "#d2d4df",
+          padding: "20px",
+          width: "800px",
+          height: "70vh",
+        }}
+      >
+        <Stack direction="row" spacing={2}>
+          {menuItems.map((menu, i) => {
+            return Menuitem(menu);
+          })}
+        </Stack>
+      </Box>
+    </>
+  );
+};
+
+export default DropdownList;
